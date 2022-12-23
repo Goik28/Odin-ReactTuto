@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Overview from "./components/Overview";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      tasks: [],
+      value: "",
+    };
+    this.addTask = this.addTask.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  addTask() {
+    this.setState({ task: this.state.tasks.push(this.state.value) });
+    this.setState({ value: "" });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <input
+          name="task"
+          type="text"
+          placeholder="Write task here..."
+          value={this.state.value}
+          onChange={this.handleChange}
+        ></input>
+        <button onClick={this.addTask}>Add Task</button>
+
+        <Overview tasks={this.state.tasks}></Overview>
+      </div>
+    );
+  }
 }
 
 export default App;
